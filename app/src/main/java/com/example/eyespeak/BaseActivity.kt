@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.ar.core.ArCoreApk
@@ -38,6 +39,7 @@ abstract class BaseActivity : AppCompatActivity() {
         subscribeToViewModel()
         subscribeToPauseButton()
         VocableTextToSpeech.initialize(this)
+        head_tracking_error.isVisible = false
     }
 
     override fun onDestroy() {
@@ -65,14 +67,28 @@ abstract class BaseActivity : AppCompatActivity() {
         var newX = x
         var newY = y
         if (x < 0) {
+            pointer_view.isVisible = false
+            head_tracking_error.isVisible = true
             newX = 0f
         } else if (x > displayMetrics.widthPixels) {
+            pointer_view.isVisible = false
+            head_tracking_error.isVisible = true
+
             newX = displayMetrics.widthPixels.toFloat()
+        } else {
+            pointer_view.isVisible = true
+            head_tracking_error.isVisible = false
+
         }
 
         if (y < 0) {
+            pointer_view.isVisible = false
+            head_tracking_error.isVisible = true
             newY = 0f
         } else if (y > displayMetrics.heightPixels) {
+            pointer_view.isVisible = false
+            head_tracking_error.isVisible = true
+
             newY = displayMetrics.heightPixels.toFloat()
         }
         getPointerView().updatePointerPosition(newX, newY)
@@ -111,7 +127,7 @@ abstract class BaseActivity : AppCompatActivity() {
             getAllViews().forEach {
                 if (viewIntersects(it, getPointerView())) {
                     currentView = it
-                    if(currentView is PauseButton) {
+                    if (currentView is PauseButton) {
                         (currentView as PauseButton).onPointerEnter()
                     }
                     return

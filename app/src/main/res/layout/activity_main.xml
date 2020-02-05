@@ -267,6 +267,22 @@
         </LinearLayout>
     </LinearLayout>
 
+    <RelativeLayout
+        android:id="@+id/head_tracking_error"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="350dp"
+            android:layout_height="200dp"
+            android:layout_centerInParent="true"
+            android:background="@android:color/holo_blue_dark"
+            android:text="Get your head back in view"
+            android:textAlignment="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </RelativeLayout>
+
 
     <com.example.eyespeak.PointerView
         android:id="@+id/pointer_view"
