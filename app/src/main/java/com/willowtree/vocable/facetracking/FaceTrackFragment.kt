@@ -1,13 +1,17 @@
 package com.willowtree.vocable.facetracking
 
 import android.os.Bundle
+import android.os.Handler
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.ar.core.AugmentedFace
 import com.google.ar.core.Config
 import com.google.ar.core.Session
+import com.google.ar.sceneform.FrameTime
+import com.google.ar.sceneform.Scene
 import com.google.ar.sceneform.ux.ArFragment
 import com.willowtree.vocable.utils.VocableSharedPreferences
+import kotlinx.coroutines.delay
 import org.koin.android.ext.android.inject
 import java.util.*
 
@@ -17,6 +21,8 @@ class FaceTrackFragment : ArFragment() {
     private lateinit var viewModel: FaceTrackingViewModel
 
     private val sharedPrefs: VocableSharedPreferences by inject()
+
+    private var sceneUpdateListener: Scene.OnUpdateListener? = null
 
     override fun getSessionConfiguration(session: Session): Config {
         val config = Config(session)
@@ -36,12 +42,19 @@ class FaceTrackFragment : ArFragment() {
         }
         viewModel = ViewModelProviders.of(requireActivity()).get(FaceTrackingViewModel::class.java)
         subscribeToViewModel()
-        attachFaceTracker()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        val scene = arSceneView.scene
+        scene.removeOnUpdateListener(sceneUpdateListener)
     }
 
     override fun onResume() {
         super.onResume()
         enableFaceTracking(sharedPrefs.getHeadTrackingEnabled())
+
+        Handler().postDelayed({attachFaceTracker()}, 1000)
     }
 
     private fun subscribeToViewModel() {
@@ -53,10 +66,12 @@ class FaceTrackFragment : ArFragment() {
     }
 
     private fun attachFaceTracker() {
-        val scene = arSceneView.scene
-        scene.addOnUpdateListener {
+        sceneUpdateListener = Scene.OnUpdateListener {
             viewModel.onFaceDetected(arSceneView.session?.getAllTrackables(AugmentedFace::class.java))
         }
+
+        val scene = arSceneView.scene
+        scene.addOnUpdateListener(sceneUpdateListener)
     }
 
     fun enableFaceTracking(enable: Boolean) {

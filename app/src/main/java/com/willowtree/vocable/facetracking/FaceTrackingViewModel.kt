@@ -2,6 +2,7 @@ package com.willowtree.vocable.facetracking
 
 import android.content.SharedPreferences
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -55,6 +56,7 @@ class FaceTrackingViewModel : ViewModel(), KoinComponent {
     }
 
     fun onFaceDetected(augmentedFaces: Collection<AugmentedFace>?) {
+        Log.e("bad stuff", "$augmentedFaces")
         if (!headTrackingEnabled) {
             liveShowError.postValue(false)
             return
