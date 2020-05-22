@@ -85,7 +85,7 @@ class EditCategoriesFragment : BaseFragment<FragmentEditCategoriesBinding>() {
                 .beginTransaction()
                 .replace(
                     R.id.settings_fragment_container,
-                    EditKeyboardFragment.newCreateCategoryInstance()
+                    EditCategoriesKeyboardFragment.newInstance(null)
                 )
                 .addToBackStack(null)
                 .commit()
@@ -94,10 +94,7 @@ class EditCategoriesFragment : BaseFragment<FragmentEditCategoriesBinding>() {
         editCategoriesViewModel =
             ViewModelProviders.of(
                 requireActivity(),
-                BaseViewModelFactory(
-                    getString(R.string.category_123_id),
-                    getString(R.string.category_my_sayings_id)
-                )
+                BaseViewModelFactory()
             ).get(EditCategoriesViewModel::class.java)
         subscribeToViewModel()
     }
@@ -107,7 +104,7 @@ class EditCategoriesFragment : BaseFragment<FragmentEditCategoriesBinding>() {
     }
 
     private fun subscribeToViewModel() {
-        editCategoriesViewModel.addRemoveCategoryList.observe(requireActivity(), Observer {
+        editCategoriesViewModel.addRemoveCategoryList.observe(viewLifecycleOwner, Observer {
             it?.let { categories ->
                 binding.editCategoriesViewPager.apply {
                     isSaveEnabled = false
@@ -128,7 +125,7 @@ class EditCategoriesFragment : BaseFragment<FragmentEditCategoriesBinding>() {
             }
         })
 
-        editCategoriesViewModel.lastViewedIndex.observe(requireActivity(), Observer {
+        editCategoriesViewModel.lastViewedIndex.observe(viewLifecycleOwner, Observer {
             it?.let { index ->
                 val pageNum = index / maxEditCategories
                 val middle = categoriesAdapter.itemCount / 2

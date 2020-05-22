@@ -4,35 +4,43 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.children
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.willowtree.vocable.BaseActivity
 import com.willowtree.vocable.BaseViewModelFactory
+import com.willowtree.vocable.BuildConfig
 import com.willowtree.vocable.R
 import com.willowtree.vocable.customviews.PointerListener
 import com.willowtree.vocable.customviews.PointerView
 import com.willowtree.vocable.databinding.ActivitySettingsBinding
 import com.willowtree.vocable.facetracking.FaceTrackFragment
+import com.willowtree.vocable.utils.VocableSharedPreferences
+import org.koin.android.ext.android.inject
 
 class SettingsActivity : BaseActivity() {
 
     private lateinit var binding: ActivitySettingsBinding
     private val allViews = mutableListOf<View>()
     private lateinit var viewModel: SettingsViewModel
+    private val sharedPrefs: VocableSharedPreferences by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         viewModel = ViewModelProviders.of(
             this,
-            BaseViewModelFactory(
-                getString(R.string.category_123_id),
-                getString(R.string.category_my_sayings_id)
-            )
+            BaseViewModelFactory()
         ).get(SettingsViewModel::class.java)
 
         super.onCreate(savedInstanceState)
 
         binding = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        if (BuildConfig.USE_HEAD_TRACKING) {
+            binding.pointerView.isVisible = sharedPrefs.getHeadTrackingEnabled()
+        } else {
+            binding.pointerView.isVisible = false
+        }
 
         if (supportFragmentManager.findFragmentById(R.id.settings_fragment_container) == null) {
             supportFragmentManager

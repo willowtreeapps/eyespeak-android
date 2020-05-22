@@ -1,6 +1,5 @@
 package com.willowtree.vocable.keyboard
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -22,15 +21,14 @@ import com.willowtree.vocable.databinding.KeyboardKeyLayoutBinding
 import com.willowtree.vocable.presets.PresetsFragment
 import com.willowtree.vocable.settings.SettingsActivity
 import com.willowtree.vocable.utils.VocableTextToSpeech
-import org.koin.android.ext.android.get
 import java.util.*
 
 class KeyboardFragment : BaseFragment<FragmentKeyboardBinding>() {
 
-    override val bindingInflater: BindingInflater<FragmentKeyboardBinding> = FragmentKeyboardBinding::inflate
+    override val bindingInflater: BindingInflater<FragmentKeyboardBinding> =
+        FragmentKeyboardBinding::inflate
     private lateinit var viewModel: KeyboardViewModel
     private lateinit var keys: Array<String>
-    private val currentLocale = get<Context>().resources.configuration?.locales?.get(0)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,7 +36,7 @@ class KeyboardFragment : BaseFragment<FragmentKeyboardBinding>() {
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        keys =  resources.getStringArray(R.array.keyboard_keys)
+        keys = resources.getStringArray(R.array.keyboard_keys)
         populateKeys()
         return binding.root
     }
@@ -67,6 +65,8 @@ class KeyboardFragment : BaseFragment<FragmentKeyboardBinding>() {
                             text?.toString()?.toLowerCase(Locale.getDefault())
                         )
                     }
+
+                    viewModel.currentText = binding.keyboardInput.text.toString()
                 }
             }
         }
@@ -100,6 +100,11 @@ class KeyboardFragment : BaseFragment<FragmentKeyboardBinding>() {
                 binding.keyboardInput.text?.let { text ->
                     if (text.isNotBlank()) {
                         viewModel.addNewPhrase(text.toString())
+                        binding.actionButtonContainer.saveButton.apply {
+                            isActivated = true
+                            isEnabled = false
+                        }
+
                     }
                 }
             }
@@ -107,11 +112,13 @@ class KeyboardFragment : BaseFragment<FragmentKeyboardBinding>() {
 
         binding.keyboardClearButton.action = {
             binding.keyboardInput.setText(R.string.keyboard_select_letters)
+            viewModel.currentText = ""
         }
 
         binding.keyboardSpaceButton.action = {
             if (!isDefaultTextVisible() && binding.keyboardInput.text?.endsWith(' ') == false) {
                 binding.keyboardInput.append(" ")
+                viewModel.currentText = binding.keyboardInput.text.toString()
             }
         }
 
@@ -122,6 +129,7 @@ class KeyboardFragment : BaseFragment<FragmentKeyboardBinding>() {
                     if (text.isNullOrEmpty()) {
                         setText(R.string.keyboard_select_letters)
                     }
+                    viewModel.currentText = this.text.toString()
                 }
             }
         }
@@ -139,10 +147,7 @@ class KeyboardFragment : BaseFragment<FragmentKeyboardBinding>() {
 
         viewModel = ViewModelProviders.of(
             this,
-            BaseViewModelFactory(
-                getString(R.string.category_123_id),
-                getString(R.string.category_my_sayings_id)
-            )
+            BaseViewModelFactory()
         ).get(KeyboardViewModel::class.java)
         subscribeToViewModel()
     }
@@ -150,6 +155,13 @@ class KeyboardFragment : BaseFragment<FragmentKeyboardBinding>() {
     private fun subscribeToViewModel() {
         viewModel.showPhraseAdded.observe(viewLifecycleOwner, Observer {
             binding.phraseSavedView.root.isVisible = it
+        })
+
+        viewModel.isPhraseSaved.observe(viewLifecycleOwner, Observer {
+            binding.actionButtonContainer.saveButton.apply {
+                isActivated = it
+                isEnabled = !it
+            }
         })
     }
 

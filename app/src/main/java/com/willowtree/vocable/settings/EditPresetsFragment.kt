@@ -96,7 +96,7 @@ class EditPresetsFragment : BaseFragment<FragmentEditPresetsBinding>() {
                 .beginTransaction()
                 .replace(
                     R.id.settings_fragment_container,
-                    EditKeyboardFragment.newInstance(false)
+                    EditPhrasesKeyboardFragment.newInstance(null)
                 )
                 .addToBackStack(null)
                 .commit()
@@ -105,10 +105,7 @@ class EditPresetsFragment : BaseFragment<FragmentEditPresetsBinding>() {
         editPhrasesViewModel =
             ViewModelProviders.of(
                 requireActivity(),
-                BaseViewModelFactory(
-                    getString(R.string.category_123_id),
-                    getString(R.string.category_my_sayings_id)
-                )
+                BaseViewModelFactory()
             ).get(EditPhrasesViewModel::class.java)
         subscribeToViewModel()
 

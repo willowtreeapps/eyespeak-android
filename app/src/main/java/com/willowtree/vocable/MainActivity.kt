@@ -5,17 +5,21 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.children
+import androidx.core.view.isVisible
 import com.willowtree.vocable.customviews.PointerListener
 import com.willowtree.vocable.customviews.PointerView
 import com.willowtree.vocable.databinding.ActivityMainBinding
 import com.willowtree.vocable.presets.PresetsFragment
+import com.willowtree.vocable.utils.VocableSharedPreferences
 import com.willowtree.vocable.utils.VocableTextToSpeech
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
+import org.koin.android.ext.android.inject
 
 
 class MainActivity : BaseActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private val sharedPrefs: VocableSharedPreferences by inject()
     private val allViews = mutableListOf<View>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,6 +45,15 @@ class MainActivity : BaseActivity() {
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase))
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (!BuildConfig.USE_HEAD_TRACKING) {
+            binding.pointerView.isVisible = false
+        } else {
+            binding.pointerView.isVisible = sharedPrefs.getHeadTrackingEnabled()
+        }
     }
 
     override fun onDestroy() {
