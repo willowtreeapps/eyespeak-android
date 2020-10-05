@@ -79,9 +79,7 @@ class EditCategoriesFragment : BaseFragment<FragmentEditCategoriesBinding>() {
         }
 
         binding.addCategoryButton.action = {
-            if (findNavController().currentDestination?.id == R.id.editCategoriesFragment) {
-                findNavController().navigate(R.id.action_editCategoriesFragment_to_editCategoriesKeyboardFragment)
-            }
+            findNavController().navigate(R.id.action_editCategoriesFragment_to_editCategoriesKeyboardFragment)
         }
 
         editCategoriesViewModel =

@@ -86,22 +86,16 @@ class PresetsFragment : BaseFragment<FragmentPresetsBinding>() {
         }
 
         binding.actionButtonContainer.keyboardButton.action = {
-            if (findNavController().currentDestination?.id == R.id.presetsFragment) {
-                findNavController().navigate(R.id.action_presetsFragment_to_keyboardFragment)
-            }
+            findNavController().navigate(R.id.action_presetsFragment_to_keyboardFragment)
         }
 
         binding.actionButtonContainer.settingsButton.action = {
-            if (findNavController().currentDestination?.id == R.id.presetsFragment) {
-                findNavController().navigate(R.id.action_presetsFragment_to_settingsActivity)
-            }
+            findNavController().navigate(R.id.action_presetsFragment_to_settingsActivity)
         }
 
         binding.emptyAddPhraseButton.action = {
             val action = PresetsFragmentDirections.actionPresetsFragmentToKeyboardFragment()
-            if (findNavController().currentDestination?.id == R.id.presetsFragment) {
-                findNavController().navigate(action)
-            }
+            findNavController().navigate(action)
         }
 
         categoriesAdapter = CategoriesPagerAdapter(childFragmentManager)

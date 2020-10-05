@@ -174,9 +174,7 @@ class EditCategoriesListFragment : BaseFragment<FragmentEditCategoriesListBindin
                         EditCategoriesFragmentDirections.actionEditCategoriesFragmentToEditCategoryOptionsFragment(
                             category
                         )
-                    if (findNavController().currentDestination?.id == R.id.editCategoriesFragment) {
-                        findNavController().navigate(action)
-                    }
+                    findNavController().navigate(action)
                     editCategoriesViewModel.onCategorySelected(category)
                 }
             }
