@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:theme="@style/SettingsTheme"
-    tools:background="@color/colorPrimaryDark">
+    tools:background="?attr/colorPrimaryDark">
 
     <com.willowtree.vocable.customviews.VocableImageButton
         android:id="@+id/edit_options_back_button"

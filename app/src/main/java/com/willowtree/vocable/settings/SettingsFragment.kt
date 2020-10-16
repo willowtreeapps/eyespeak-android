@@ -98,6 +98,12 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
             }
         }
 
+        binding.settingsOptionsContainer.themesButton.action = {
+            if (findNavController().currentDestination?.id == R.id.settingsFragment) {
+                findNavController().navigate(R.id.action_settingsFragment_to_themesFragment)
+            }
+        }
+
         viewModel = ViewModelProviders.of(
             requireActivity(),
             BaseViewModelFactory()

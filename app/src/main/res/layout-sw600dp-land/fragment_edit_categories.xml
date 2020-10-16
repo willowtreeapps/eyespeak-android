@@ -5,7 +5,7 @@
     android:id="@+id/presets_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:background="@color/colorPrimaryDark">
+    tools:background="?attr/colorPrimaryDark">
 
     <com.willowtree.vocable.customviews.VocableImageButton
         android:id="@+id/back_button"
@@ -47,7 +47,7 @@
         android:id="@+id/top_view"
         android:layout_width="0dp"
         android:layout_height="2dp"
-        android:background="@color/colorPrimary"
+        android:background="?attr/colorPrimary"
         app:layout_constraintEnd_toEndOf="@id/edit_categories_view_pager"
         app:layout_constraintStart_toStartOf="@id/edit_categories_view_pager"
         app:layout_constraintTop_toTopOf="@id/edit_categories_view_pager" />

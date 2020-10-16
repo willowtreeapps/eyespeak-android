@@ -4,5 +4,5 @@
     <corners android:radius="@dimen/highlighted_background_radius" />
     <stroke
         android:width="@dimen/highlighted_background_width"
-        android:color="@color/colorAccent" />
+        android:color="?attr/colorAccent" />
 </shape>

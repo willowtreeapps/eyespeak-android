@@ -1,4 +1,10 @@
 <resources>
+    <attr name="colorPrimaryDisabled" format="reference|color"/>
+    <attr name="overlayColor" format="reference|color"/>
+    <attr name="categoryColor" format="reference|color"/>
+    <attr name="alertColor" format="reference|color"/>
+    <attr name="speakerButtonColor" format="reference|color"/>
+
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -19,11 +25,29 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
-    <style name="SettingsTheme" parent="AppTheme">
-        <item name="colorPrimary">@color/textColor</item>
-        <item name="android:colorForeground">@color/textColor</item>
-        <item name="colorAccent">@color/selectedColor</item>
+    <!-- region Color themes -->
+    <style name="DefaultTheme">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDisabled">@color/colorPrimaryDisabled</item>
+        <item name="overlayColor">@color/overlayColor</item>
+        <item name="categoryColor">@color/categoryColor</item>
+        <item name="alertColor">@color/alertColor</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="speakerButtonColor">@color/speakerButtonColor</item>
     </style>
+
+    <style name="RedAndYellow">
+        <item name="colorPrimary">@color/colorPrimaryRed</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkRed</item>
+        <item name="colorPrimaryDisabled">@color/colorPrimaryDisabledRed</item>
+        <item name="overlayColor">@color/overlayColorRed</item>
+        <item name="categoryColor">@color/categoryColorRed</item>
+        <item name="alertColor">@color/alertColorRed</item>
+        <item name="colorAccent">@color/colorAccentRed</item>
+        <item name="speakerButtonColor">@color/speakerButtonColorRed</item>
+    </style>
+    <!-- endregion -->
 
     <style name="VocableButton" parent="Widget.AppCompat.Button">
         <item name="android:textColor">@color/vocable_button_text_color</item>
@@ -146,7 +170,7 @@
         <item name="android:layout_width">@dimen/settings_switch_width</item>
         <item name="android:layout_height">@dimen/settings_switch_height</item>
         <item name="android:layout_marginEnd">@dimen/settings_margin_default</item>
-        <item name="colorControlActivated">@color/selectedColor</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
         <item name="android:checked">true</item>
         <item name="android:scaleX">1.5</item>
         <item name="android:scaleY">1.5</item>
@@ -319,7 +343,7 @@
         <item name="android:layout_marginTop">@dimen/settings_margin_default</item>
         <item name="android:layout_marginEnd">@dimen/settings_margin_default</item>
         <item name="android:layout_marginBottom">@dimen/settings_margin_default</item>
-        <item name="colorControlActivated">@color/selectedColor</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
         <item name="android:checked">true</item>
         <item name="android:scaleX">1.5</item>
         <item name="android:scaleY">1.5</item>

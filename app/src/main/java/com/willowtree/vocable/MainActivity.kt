@@ -28,6 +28,7 @@ class MainActivity : BaseActivity() {
     private lateinit var settingsViewModel: SettingsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(sharedPrefs.getSelectedTheme())
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)

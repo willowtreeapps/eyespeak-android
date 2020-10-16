@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
+import com.willowtree.vocable.R
 import com.willowtree.vocable.settings.SensitivityFragment
 import org.koin.core.KoinComponent
 import org.koin.core.get
@@ -20,6 +21,7 @@ class VocableSharedPreferences : KoinComponent {
         const val DEFAULT_SENSITIVITY = SensitivityFragment.MEDIUM_SENSITIVITY
         const val KEY_DWELL_TIME = "KEY_DWELL_TIME"
         const val DEFAULT_DWELL_TIME = SensitivityFragment.DWELL_TIME_ONE_SECOND
+        const val KEY_SELECTED_THEME = "KEY_SELECTED_THEME"
     }
 
     private val encryptedPrefs: EncryptedSharedPreferences by lazy {
@@ -74,4 +76,11 @@ class VocableSharedPreferences : KoinComponent {
 
     fun getHeadTrackingEnabled(): Boolean =
         encryptedPrefs.getBoolean(KEY_HEAD_TRACKING_ENABLED, true)
+
+    fun setSelectedTheme(themeId: Int) {
+        encryptedPrefs.edit().putInt(KEY_SELECTED_THEME, themeId).apply()
+    }
+
+    fun getSelectedTheme(): Int =
+        encryptedPrefs.getInt(KEY_SELECTED_THEME, R.style.DefaultTheme)
 }

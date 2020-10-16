@@ -10,7 +10,16 @@
     <color name="textColor">#D1EEE9</color>
     <color name="textColorDisabled">#32D1EEE9</color>
     <color name="speakerButtonColor">#4DD9F9</color>
-    <color name="colorAccent">#FEA430</color>
-    <color name="selectedColor">#00FA9A</color>
+    <color name="colorAccent">#00FA9A</color>
+    <color name="pointerColor">#FEA430</color>
     <color name="errorColor">#AD006C</color>
+
+    <color name="colorPrimaryRed">#a00909</color>
+    <color name="colorPrimaryDarkRed">#6b0000</color>
+    <color name="colorPrimaryDisabledRed">#80a13232</color>
+    <color name="overlayColorRed">#595c1c1c</color>
+    <color name="categoryColorRed">#944b4b</color>
+    <color name="alertColorRed">#D9944b4b</color>
+    <color name="colorAccentRed">#fff16d</color>
+    <color name="speakerButtonColorRed">#ffad84</color>
 </resources>

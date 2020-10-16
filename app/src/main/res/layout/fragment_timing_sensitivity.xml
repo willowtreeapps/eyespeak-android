@@ -3,8 +3,7 @@
     android:id="@+id/parent_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:theme="@style/SettingsTheme">
+    android:orientation="vertical">
 
     <include layout="@layout/guidelines_settings" />
 

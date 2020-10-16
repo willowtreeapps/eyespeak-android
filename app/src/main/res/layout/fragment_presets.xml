@@ -5,7 +5,7 @@
     android:id="@+id/presets_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:background="@color/colorPrimaryDark">
+    tools:background="?attr/colorPrimaryDark">
 
     <TextView
         android:id="@+id/current_text"

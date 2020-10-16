@@ -100,6 +100,9 @@
         <action
             android:id="@+id/action_settingsFragment_to_editCategoriesFragment"
             app:destination="@id/editCategoriesFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_themesFragment"
+            app:destination="@id/themesFragment" />
     </fragment>
     <fragment
         android:id="@+id/presetsFragment"
@@ -138,4 +141,9 @@
             android:name="phraseText"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/themesFragment"
+        android:name="com.willowtree.vocable.settings.ThemesFragment"
+        android:label="ThemesFragment"
+        tools:layout="@layout/fragment_themes"/>
 </navigation>

@@ -33,5 +33,12 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="@string/settings_selection_mode" />
+
+    <com.willowtree.vocable.customviews.SettingsButton
+        android:id="@+id/themes_button"
+        style="@style/SettingsOptionButtons"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="@string/color_theme"/>
   
 </GridLayout>

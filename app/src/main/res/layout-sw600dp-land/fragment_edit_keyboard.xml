@@ -5,7 +5,7 @@
     android:id="@+id/edit_keyboard_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:background="@color/colorPrimaryDark">
+    tools:background="?attr/colorPrimaryDark">
 
     <com.willowtree.vocable.customviews.VocableImageButton
         android:id="@+id/back_button"
