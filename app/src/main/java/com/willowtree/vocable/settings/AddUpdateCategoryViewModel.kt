@@ -11,15 +11,11 @@ import kotlinx.coroutines.launch
 import org.koin.core.inject
 import java.util.*
 
-class AddUpdateCategoryViewModel : BaseViewModel() {
+class AddUpdateCategoryViewModel(private val presetsRepository: PresetsRepository, private val localizedResourceUtility: LocalizedResourceUtility) : BaseViewModel() {
 
     companion object {
         private const val CATEGORY_MESSAGE_DELAY = 2000L
     }
-
-    private val presetsRepository: PresetsRepository by inject()
-
-    private val localizedResourceUtility: LocalizedResourceUtility by inject()
 
     private val liveShowCategoryUpdateMessage = MutableLiveData<Boolean>()
     val showCategoryUpdateMessage: LiveData<Boolean> = liveShowCategoryUpdateMessage
