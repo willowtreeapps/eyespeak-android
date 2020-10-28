@@ -6,11 +6,10 @@ import com.willowtree.vocable.BaseViewModel
 import com.willowtree.vocable.room.Category
 import com.willowtree.vocable.room.Phrase
 import kotlinx.coroutines.launch
+import org.koin.core.KoinComponent
 import org.koin.core.inject
 
-class PresetsViewModel : BaseViewModel() {
-
-    private val presetsRepository: PresetsRepository by inject()
+class PresetsViewModel(private val presetsRepository: PresetsRepository) : BaseViewModel(), KoinComponent {
 
     private val liveCategoryList = MutableLiveData<List<Category>>()
     val categoryList: LiveData<List<Category>> = liveCategoryList

@@ -7,11 +7,10 @@ import com.willowtree.vocable.room.Phrase
 import com.willowtree.vocable.room.VocableDatabase
 import org.koin.core.KoinComponent
 import org.koin.core.get
+import org.koin.core.inject
 import java.util.*
 
-class PresetsRepository(context: Context) : KoinComponent {
-
-    private val database = VocableDatabase.getVocableDatabase(context)
+class PresetsRepository(private val database: VocableDatabase) : KoinComponent {
 
     suspend fun getAllCategories(): List<Category> {
         return database.categoryDao().getAllCategories()
