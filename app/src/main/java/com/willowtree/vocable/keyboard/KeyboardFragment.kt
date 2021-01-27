@@ -90,14 +90,10 @@ class KeyboardFragment : BaseFragment<FragmentKeyboardBinding>() {
             if (!isDefaultTextVisible()) {
                 binding.keyboardInput.text?.let { text ->
                     if (text.isNotBlank()) {
+                        viewModel.addNewPhrase(text.toString())
                         binding.actionButtonContainer.saveButton.apply {
                             isActivated = true
                             isEnabled = false
-                        }
-
-                        val action = KeyboardFragmentDirections.actionKeyboardFragmentToAddToCategoryPickerFragment(text.toString())
-                        if (findNavController().currentDestination?.id == R.id.keyboardFragment) {
-                            findNavController().navigate(action)
                         }
                     }
                 }
@@ -138,7 +134,7 @@ class KeyboardFragment : BaseFragment<FragmentKeyboardBinding>() {
             }
         }
 
-        (binding.phraseSavedView.root as TextView).setText(R.string.saved_successfully)
+        binding.phraseSavedView.root.text = getString(R.string.saved_successfully, "My Sayings")
 
         viewModel = ViewModelProviders.of(
             this,

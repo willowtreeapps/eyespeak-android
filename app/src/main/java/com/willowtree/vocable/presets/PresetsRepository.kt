@@ -1,6 +1,7 @@
 package com.willowtree.vocable.presets
 
 import android.content.Context
+import android.util.Log
 import com.willowtree.vocable.room.Category
 import com.willowtree.vocable.room.CategoryPhraseCrossRef
 import com.willowtree.vocable.room.Phrase
@@ -30,7 +31,18 @@ class PresetsRepository(context: Context) : KoinComponent {
     }
 
     suspend fun addPhraseToRecents(phrase: Phrase) {
-        val category = database.categoryDao().getCategoryById(PresetCategories.RECENTS.id)
+        var category = database.categoryDao().getCategoryById(PresetCategories.RECENTS.id)
+
+        if (category == null) {
+            category = Category(PresetCategories.RECENTS.id,
+                System.currentTimeMillis(),
+                false,
+                PresetCategories.RECENTS.getNameId(),
+                null,
+                false,
+                PresetCategories.RECENTS.initialSortOrder)
+            addCategory(category)
+        }
 
         // get the cross ref for the Recents category and the given phrase
         var categoryPhraseCrossRef = database.categoryPhraseCrossRefDao()
@@ -140,7 +152,7 @@ class PresetsRepository(context: Context) : KoinComponent {
         database.categoryDao().updateCategories(*categories.toTypedArray())
     }
 
-    suspend fun getCategoryById(categoryId: String): Category {
+    suspend fun getCategoryById(categoryId: String): Category? {
         return database.categoryDao().getCategoryById(categoryId)
     }
 
@@ -164,8 +176,8 @@ class PresetsRepository(context: Context) : KoinComponent {
                         false,
                         it.getNameId(),
                         null,
-                        existingCategory?.hidden,
-                        existingCategory?.sortOrder
+                        existingCategory.hidden,
+                        existingCategory.sortOrder
                     )
                 } else {
                     Category(
@@ -181,12 +193,13 @@ class PresetsRepository(context: Context) : KoinComponent {
 
             )
 
-            // delete non-user-generated cross-refs
-            val nonUserCategoryIds = PresetCategories.values().map { category -> category.id }
-            deleteCrossRefsForCategoryIds(nonUserCategoryIds)
-
             if (it.getArrayId() == -1) {
                 return@forEach
+            }
+
+            // delete non-user-generated cross-refs
+            if (existingCategory != null) {
+                deleteCrossRefsForCategoryIds(listOf(existingCategory.categoryId))
             }
 
             // delete non-user-generated phrases

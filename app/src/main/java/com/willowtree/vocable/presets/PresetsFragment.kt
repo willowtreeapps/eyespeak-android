@@ -98,9 +98,12 @@ class PresetsFragment : BaseFragment<FragmentPresetsBinding>() {
         }
 
         binding.emptyAddPhraseButton.action = {
-            val action = PresetsFragmentDirections.actionPresetsFragmentToKeyboardFragment()
-            if (findNavController().currentDestination?.id == R.id.presetsFragment) {
-                findNavController().navigate(action)
+            presetsViewModel.selectedCategory.value?.let {
+                val action =
+                    PresetsFragmentDirections.actionPresetsFragmentToAddPhraseKeyboardFragment(it)
+                if (findNavController().currentDestination?.id == R.id.presetsFragment) {
+                    findNavController().navigate(action)
+                }
             }
         }
 
@@ -309,8 +312,6 @@ class PresetsFragment : BaseFragment<FragmentPresetsBinding>() {
 
             return if (presetsViewModel.selectedCategory.value?.categoryId == PresetCategories.USER_KEYPAD.id) {
                 NumberPadFragment.newInstance(phrases)
-            } else if (presetsViewModel.selectedCategory.value?.categoryId == PresetCategories.USER_FAVORITES.id && items.isEmpty()) {
-                MySayingsEmptyFragment.newInstance(false)
             } else {
                 PhrasesFragment.newInstance(phrases)
             }

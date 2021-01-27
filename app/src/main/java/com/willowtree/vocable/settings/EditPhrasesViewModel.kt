@@ -1,5 +1,6 @@
 package com.willowtree.vocable.settings
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.willowtree.vocable.BaseViewModel
@@ -48,6 +49,12 @@ class EditPhrasesViewModel : BaseViewModel() {
             with(presetsRepository) {
                 deletePhrase(phrase)
                 val mySayingsCategory = getCategoryById(PresetCategories.USER_FAVORITES.id)
+
+                if (mySayingsCategory == null) {
+                    Log.e("Error", "My Sayings Category from database is null")
+                    return@launch
+                }
+
                 deleteCrossRef(
                     CategoryPhraseCrossRef(
                         mySayingsCategory.categoryId,
